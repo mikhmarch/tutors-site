@@ -1,0 +1,5 @@
+.claude/
+__pycache__/
+bot/.env
+bot/.venv/
+bot/data/

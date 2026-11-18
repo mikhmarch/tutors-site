@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Алина Пензева и команда репетиторов</title>
+<meta name="description" content="Репетиторы по математике, химии и английскому языку. Команда Алины Пензевой — подберём преподавателя в Telegram.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Unbounded:wght@500;600;700&display=swap&subset=cyrillic" rel="stylesheet">
+<style>
+  :root{
+    /* палитра из референса */
+    --lav:   #B0B3FF;
+    --sky:   #A8C3FF;
+    --mist:  #D4D9FF;
+    --cloud: #EDEFFF;
+    --photo: #C7C8FB;   /* фон фотографий */
+
+    --ink:    #1C1D47;
+    --muted:  #5B5D88;
+    --accent: #4F53E0;
+    --accent-hover: #3F43C9;
+    --bg:     #FFFFFF;
+    --line:   rgba(28,29,71,.08);
+
+    --r-lg: 32px;
+    --r-md: 22px;
+    --wrap: 1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+    color:var(--ink);background:var(--bg);
+    font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  }
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+  h1,h2,h3{font-family:"Unbounded",sans-serif;font-weight:600;letter-spacing:-.02em;line-height:1.12}
+
+  /* ---------- кнопки ---------- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    font-weight:700;font-size:16px;border-radius:999px;padding:16px 26px;
+    transition:background .2s,transform .2s,box-shadow .2s;white-space:nowrap;
+  }
+  .btn svg{width:20px;height:20px;flex:none}
+  .btn-primary{background:var(--accent);color:#fff;box-shadow:0 10px 24px -10px rgba(79,83,224,.7)}
+  .btn-primary:hover{background:var(--accent-hover);transform:translateY(-2px)}
+  .btn-ghost{background:var(--cloud);color:var(--ink)}
+  .btn-ghost:hover{background:var(--mist)}
+  .btn-sm{padding:11px 18px;font-size:15px}
+
+  /* ---------- шапка ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid transparent;transition:border-color .2s;
+  }
+  header.scrolled{border-color:var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:74px;gap:20px}
+  .logo{display:flex;align-items:center;gap:12px;font-weight:700;line-height:1.2}
+  .logo-mark{width:38px;height:38px;border-radius:12px;overflow:hidden;display:grid;grid-template-rows:4fr 3fr 2fr 1.4fr;flex:none}
+  .logo-mark i:nth-child(1){background:var(--lav)} .logo-mark i:nth-child(2){background:var(--sky)}
+  .logo-mark i:nth-child(3){background:var(--mist)} .logo-mark i:nth-child(4){background:var(--cloud)}
+  .logo small{display:block;font-weight:500;color:var(--muted);font-size:13px}
+  .nav-links{display:flex;gap:30px;font-weight:600;font-size:15px;color:var(--muted)}
+  .nav-links a:hover{color:var(--ink)}
+
+  /* ---------- hero ---------- */
+  .hero{padding:56px 0 88px}
+  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+  .eyebrow{
+    display:inline-flex;gap:8px;align-items:center;background:var(--cloud);
+    padding:8px 16px;border-radius:999px;font-weight:600;font-size:14px;color:var(--muted);margin-bottom:26px;
+  }
+  .eyebrow b{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+  .hero h1{font-size:clamp(34px,4.6vw,58px);margin-bottom:24px}
+  .hero h1 em{font-style:normal;background:linear-gradient(transparent 62%,var(--mist) 62%);padding:0 4px}
+  .hero p.lead{font-size:19px;color:var(--muted);max-width:520px;margin-bottom:36px}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:12px}
+  .subjects{display:flex;gap:10px;flex-wrap:wrap;margin-top:40px}
+  .subj{border:1px solid var(--line);border-radius:14px;padding:10px 16px;font-weight:600;font-size:15px}
+  .subj span{color:var(--muted);font-weight:500}
+
+  .hero-photo{position:relative}
+  .stripes{
+    position:absolute;inset:44px -18px -18px 44px;border-radius:var(--r-lg);overflow:hidden;
+    display:grid;grid-template-rows:4fr 2.6fr 1.8fr 1.4fr;
+  }
+  .stripes i:nth-child(1){background:var(--lav)} .stripes i:nth-child(2){background:var(--sky)}
+  .stripes i:nth-child(3){background:var(--mist)} .stripes i:nth-child(4){background:var(--cloud)}
+  .hero-photo .frame{
+    position:relative;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:4/5;background:var(--photo);
+    box-shadow:0 30px 60px -30px rgba(28,29,71,.35);
+  }
+  .hero-photo .frame img{width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+  .badge{
+    position:absolute;left:-28px;bottom:36px;background:#fff;border-radius:20px;padding:16px 20px;
+    box-shadow:0 18px 40px -18px rgba(28,29,71,.35);line-height:1.35;
+  }
+  .badge b{display:block;font-size:16px}
+  .badge span{font-size:14px;color:var(--muted)}
+
+  /* ---------- секции ---------- */
+  section{padding:96px 0}
+  .sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:44px;flex-wrap:wrap}
+  .sec-head h2{font-size:clamp(28px,3.4vw,42px);max-width:640px}
+  .kicker{font-weight:700;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+
+  /* обо мне */
+  .about{background:var(--cloud);border-radius:var(--r-lg);margin:0 16px;padding:88px 0}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  .about-text p{font-size:19px;margin-bottom:18px}
+  .about-text p.sign{font-family:"Unbounded",sans-serif;font-size:16px;color:var(--muted);margin-top:26px}
+  .principles{display:grid;gap:14px}
+  .pr{background:#fff;border-radius:var(--r-md);padding:24px 26px;display:flex;gap:18px;align-items:flex-start}
+  .pr-n{
+    flex:none;width:44px;height:44px;border-radius:14px;display:grid;place-items:center;
+    font-family:"Unbounded",sans-serif;font-weight:600;font-size:16px;
+  }
+  .pr:nth-child(1) .pr-n{background:var(--lav)} .pr:nth-child(2) .pr-n{background:var(--sky)} .pr:nth-child(3) .pr-n{background:var(--mist)}
+  .pr h3{font-family:"Manrope",sans-serif;font-weight:700;font-size:18px;letter-spacing:0;margin-bottom:4px}
+  .pr p{color:var(--muted);font-size:16px}
+
+  /* команда */
+  .filters{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{
+    font:inherit;font-weight:600;font-size:15px;border:1px solid var(--line);background:#fff;color:var(--ink);
+    padding:10px 18px;border-radius:999px;cursor:pointer;transition:background .2s,border-color .2s;
+  }
+  .chip:hover{background:var(--cloud)}
+  .chip[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .team{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+  .card{display:flex;flex-direction:column;transition:opacity .25s,transform .25s}
+  .card[hidden]{display:none}
+  .card .ph{border-radius:var(--r-md);overflow:hidden;aspect-ratio:4/5;background:var(--photo);position:relative}
+  .card .ph img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;transition:transform .6s}
+  .card:hover .ph img{transform:scale(1.04)}
+  .card .lead-tag{
+    position:absolute;top:16px;left:16px;background:#fff;border-radius:999px;padding:6px 12px;
+    font-size:13px;font-weight:700;
+  }
+  .card-body{padding:20px 4px 0;display:flex;flex-direction:column;gap:12px;flex:1}
+  .card h3{font-size:21px}
+  .tags{display:flex;gap:6px;flex-wrap:wrap}
+  .tag{font-size:14px;font-weight:600;padding:5px 12px;border-radius:999px}
+  .tag.math{background:var(--lav)} .tag.chem{background:var(--sky)} .tag.eng{background:var(--mist)}
+  .card .btn{margin-top:auto;align-self:flex-start}
+  .card-cta{
+    border-radius:var(--r-md);background:var(--ink);color:#fff;padding:32px;display:flex;flex-direction:column;
+    justify-content:space-between;gap:24px;min-height:100%;
+  }
+  .card-cta h3{font-size:24px}
+  .card-cta p{color:rgba(255,255,255,.72)}
+  .card-cta .btn-primary{background:#fff;color:var(--ink);box-shadow:none}
+  .card-cta .btn-primary:hover{background:var(--cloud)}
+
+  /* как начать */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .step{border-radius:var(--r-md);padding:32px 28px 30px;min-height:240px;display:flex;flex-direction:column}
+  .step:nth-child(1){background:var(--lav)} .step:nth-child(2){background:var(--sky)} .step:nth-child(3){background:var(--mist)}
+  .step .num{font-family:"Unbounded",sans-serif;font-size:56px;font-weight:600;line-height:1;opacity:.5;margin-bottom:auto}
+  .step h3{font-family:"Manrope",sans-serif;font-weight:700;font-size:21px;letter-spacing:0;margin:28px 0 8px}
+  .step p{color:rgba(28,29,71,.75);font-size:16px}
+
+  /* финальный CTA */
+  .final{padding:0 0 96px}
+  .final-box{
+    position:relative;overflow:hidden;border-radius:var(--r-lg);background:var(--ink);color:#fff;
+    padding:72px 64px;display:grid;grid-template-columns:1.3fr auto;gap:40px;align-items:center;
+  }
+  .final-box h2{font-size:clamp(28px,3.4vw,44px);margin-bottom:16px}
+  .final-box p{color:rgba(255,255,255,.72);font-size:18px;max-width:520px}
+  .final-box .btn-primary{background:#fff;color:var(--ink);font-size:17px;padding:20px 30px}
+  .final-box .btn-primary:hover{background:var(--cloud)}
+  .final-stripes{position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;overflow:hidden;opacity:.18;display:grid;grid-template-rows:4fr 3fr 2fr 1.4fr}
+  .final-stripes i:nth-child(1){background:var(--lav)} .final-stripes i:nth-child(2){background:var(--sky)}
+  .final-stripes i:nth-child(3){background:var(--mist)} .final-stripes i:nth-child(4){background:var(--cloud)}
+
+  footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--muted);font-size:15px}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  footer a{color:var(--accent);font-weight:600}
+
+  /* мобильная плашка */
+  .sticky-cta{display:none}
+
+  /* появление при скролле */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    .btn,.card .ph img{transition:none}
+  }
+
+  /* ---------- адаптив ---------- */
+  @media (max-width:980px){
+    .hero-grid,.about-grid{grid-template-columns:1fr}
+    .hero-photo{max-width:440px;margin:8px auto 0;width:100%}
+    .team{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .final-box{grid-template-columns:1fr;padding:56px 40px}
+    .nav-links{display:none}
+  }
+  @media (max-width:640px){
+    body{font-size:16px}
+    .wrap{padding:0 16px}
+    .nav{height:64px}
+    .nav .btn{display:none}
+    .hero{padding:28px 0 64px}
+    .hero p.lead{font-size:17px}
+    .hero-cta .btn{width:100%}
+    .stripes{inset:28px -10px -10px 28px}
+    .badge{left:12px;bottom:16px;padding:12px 16px}
+    section{padding:64px 0}
+    .about{margin:0 8px;padding:56px 0}
+    .about-text p{font-size:17px}
+    .team{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .card h3{font-size:16px}
+    .card .btn{width:100%;padding:11px 8px;font-size:14px;gap:6px}
+    .card .btn svg{width:16px;height:16px}
+    .card-cta .btn{white-space:normal;text-align:center}
+    .card .lead-tag{top:10px;left:10px;font-size:11px;padding:4px 9px}
+    .tag{font-size:12px;padding:4px 9px}
+    .card-cta{padding:22px}
+    .card-cta h3{font-size:18px}
+    .card-cta p{font-size:14px}
+    .steps{grid-template-columns:1fr}
+    .step{min-height:auto}
+    .step .num{font-size:40px}
+    .final{padding-bottom:110px}
+    .final-box{padding:44px 24px}
+    .final-box .btn{width:100%}
+    .sticky-cta{
+      display:block;position:fixed;left:12px;right:12px;bottom:12px;z-index:60;
+      transform:translateY(140%);transition:transform .3s ease;
+    }
+    .sticky-cta.show{transform:none}
+    .sticky-cta .btn{width:100%;box-shadow:0 14px 30px -10px rgba(28,29,71,.55)}
+  }
+  @media (max-width:340px){
+    .team{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- Иконка Telegram, переиспользуется в кнопках -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="tg" viewBox="0 0 24 24"><path fill="currentColor" d="M21.94 4.3 18.7 19.6c-.24 1.08-.88 1.35-1.79.84l-4.94-3.64-2.38 2.3c-.27.26-.49.48-1 .48l.36-5.04 9.17-8.29c.4-.36-.09-.55-.62-.2L6.16 13.2l-4.88-1.53c-1.06-.33-1.08-1.06.22-1.57L20.6 2.74c.88-.33 1.65.2 1.34 1.56Z"/></symbol>
+</svg>
+
+<header id="top">
+  <div class="wrap nav">
+    <a href="#top" class="logo" aria-label="На главную">
+      <span class="logo-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <span>Алина Пензева<small>и команда репетиторов</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Разделы">
+      <a href="#about">Обо мне</a>
+      <a href="#team">Команда</a>
+      <a href="#how">Как начать</a>
+    </nav>
+    <a class="btn btn-primary btn-sm" data-bot="header" href="#">
+      <svg><use href="#tg"/></svg>Написать в Telegram
+    </a>
+  </div>
+</header>
+
+<main>
+  <!-- ======= HERO ======= -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="reveal">
+        <div class="eyebrow"><b></b>Математика · Химия · Английский</div>
+        <h1>Объясняем так, что <em>становится понятно</em></h1>
+        <p class="lead">Я&nbsp;Алина, репетитор по&nbsp;математике. Вместе с&nbsp;командой помогаем школьникам разобраться в&nbsp;предмете, закрыть пробелы и&nbsp;спокойно подготовиться к&nbsp;экзаменам.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" data-bot="hero" href="#"><svg><use href="#tg"/></svg>Подобрать репетитора</a>
+          <a class="btn btn-ghost" href="#team">Познакомиться с командой</a>
+        </div>
+        <div class="subjects">
+          <div class="subj">Математика <span>· 3 преподавателя</span></div>
+          <div class="subj">Химия <span>· 3 преподавателя</span></div>
+          <div class="subj">Английский <span>· 1 преподаватель</span></div>
+        </div>
+      </div>
+
+      <div class="hero-photo reveal">
+        <div class="stripes" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <div class="frame">
+          <img src="img/alina-penzeva.webp" alt="Алина Пензева, репетитор по математике" width="1024" height="1280" fetchpriority="high">
+        </div>
+        <div class="badge"><b>Алина Пензева</b><span>Основатель команды · математика</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= ОБО МНЕ ======= -->
+  <section class="about" id="about">
+    <div class="wrap about-grid">
+      <div class="about-text reveal">
+        <div class="kicker">Обо мне</div>
+        <h2 style="font-size:clamp(28px,3.4vw,42px);margin-bottom:28px">Собрала команду, в&nbsp;которой уверена сама</h2>
+        <p>Каждый преподаватель здесь объясняет свой предмет спокойно, по&nbsp;шагам и&nbsp;без зубрёжки.</p>
+        <p>Если вы&nbsp;не&nbsp;знаете, к&nbsp;кому идти, напишите мне в&nbsp;Telegram: расскажите о&nbsp;цели, а&nbsp;я&nbsp;помогу выбрать преподавателя.</p>
+        <p class="sign">— Алина</p>
+      </div>
+      <div class="principles reveal">
+        <div class="pr">
+          <div class="pr-n">01</div>
+          <div><h3>Сначала находим пробелы</h3><p>Понимаем, на&nbsp;каком месте застрял ученик, и&nbsp;начинаем оттуда, а&nbsp;не&nbsp;с&nbsp;середины учебника.</p></div>
+        </div>
+        <div class="pr">
+          <div class="pr-n">02</div>
+          <div><h3>Объясняем, а&nbsp;не&nbsp;диктуем</h3><p>Ученик сам приходит к&nbsp;решению, поэтому тема остаётся в&nbsp;голове и&nbsp;после занятия.</p></div>
+        </div>
+        <div class="pr">
+          <div class="pr-n">03</div>
+          <div><h3>Подбираем под цель</h3><p>Экзамен, олимпиада или текущие оценки: подберём преподавателя под задачу и&nbsp;характер ученика.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= КОМАНДА ======= -->
+  <section id="team">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <div class="kicker">Команда</div>
+          <h2>Преподаватели</h2>
+        </div>
+        <div class="filters" role="group" aria-label="Фильтр по предмету">
+          <button class="chip" data-filter="all" aria-pressed="true">Все</button>
+          <button class="chip" data-filter="math" aria-pressed="false">Математика</button>
+          <button class="chip" data-filter="chem" aria-pressed="false">Химия</button>
+          <button class="chip" data-filter="eng" aria-pressed="false">Английский</button>
+        </div>
+      </div>
+
+      <div class="team">
+        <article class="card reveal" data-subjects="math">
+          <div class="ph">
+            <img src="img/alina-penzeva.webp" alt="Алина Пензева" loading="lazy" width="1024" height="1280">
+            <span class="lead-tag">Основатель</span>
+          </div>
+          <div class="card-body">
+            <h3>Алина Пензева</h3>
+            <div class="tags"><span class="tag math">Математика</span></div>
+            <a class="btn btn-ghost btn-sm" data-bot="alina" href="#"><svg><use href="#tg"/></svg>Записаться</a>
+          </div>
+        </article>
+
+        <article class="card reveal" data-subjects="math chem">
+          <div class="ph"><img src="img/maria-burtseva.webp" alt="Мария Бурцева" loading="lazy" width="1191" height="1269"></div>
+          <div class="card-body">
+            <h3>Мария Бурцева</h3>
+            <div class="tags"><span class="tag math">Математика</span><span class="tag chem">Химия</span></div>
+            <a class="btn btn-ghost btn-sm" data-bot="maria" href="#"><svg><use href="#tg"/></svg>Записаться</a>
+          </div>
+        </article>
+
+        <article class="card reveal" data-subjects="math chem">
+          <div class="ph"><img src="img/arseniy-lomakin.webp" alt="Арсений Ломакин" loading="lazy" width="1280" height="1169"></div>
+          <div class="card-body">
+            <h3>Арсений Ломакин</h3>
+            <div class="tags"><span class="tag math">Математика</span><span class="tag chem">Химия</span></div>
+            <a class="btn btn-ghost btn-sm" data-bot="arseniy" href="#"><svg><use href="#tg"/></svg>Записаться</a>
+          </div>
+        </article>
+
+        <article class="card reveal" data-subjects="chem">
+          <div class="ph"><img src="img/nikita-levin.webp" alt="Никита Левин" loading="lazy" width="1122" height="1402"></div>
+          <div class="card-body">
+            <h3>Никита Левин</h3>
+            <div class="tags"><span class="tag chem">Химия</span></div>
+            <a class="btn btn-ghost btn-sm" data-bot="nikita" href="#"><svg><use href="#tg"/></svg>Записаться</a>
+          </div>
+        </article>
+
+        <article class="card reveal" data-subjects="eng">
+          <div class="ph"><img src="img/masha-karataeva.webp" alt="Маша Каратаева" loading="lazy" width="1024" height="1280"></div>
+          <div class="card-body">
+            <h3>Маша Каратаева</h3>
+            <div class="tags"><span class="tag eng">Английский язык</span></div>
+            <a class="btn btn-ghost btn-sm" data-bot="masha" href="#"><svg><use href="#tg"/></svg>Записаться</a>
+          </div>
+        </article>
+
+        <article class="card reveal" data-subjects="math chem eng" data-always>
+          <div class="card-cta">
+            <h3>Не знаете, кого выбрать?</h3>
+            <p>Напишите, какой предмет и какая цель. Мы подскажем, кто из команды подойдёт лучше.</p>
+            <a class="btn btn-primary btn-sm" data-bot="help" href="#"><svg><use href="#tg"/></svg>Помогите выбрать</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= КАК НАЧАТЬ ======= -->
+  <section id="how" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <div class="kicker">Как начать</div>
+          <h2>Три шага до первого занятия</h2>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step reveal">
+          <div class="num">1</div>
+          <h3>Напишите в Telegram</h3>
+          <p>Назовите предмет или конкретного преподавателя.</p>
+        </div>
+        <div class="step reveal">
+          <div class="num">2</div>
+          <h3>Расскажите о цели</h3>
+          <p>Класс, экзамен или тема, которую хочется подтянуть: так проще подобрать программу.</p>
+        </div>
+        <div class="step reveal">
+          <div class="num">3</div>
+          <h3>Договоритесь о времени</h3>
+          <p>Согласуем удобное расписание и начнём заниматься.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= ФИНАЛ ======= -->
+  <div class="final">
+    <div class="wrap">
+      <div class="final-box reveal">
+        <div class="final-stripes" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <div>
+          <h2>Готовы начать?</h2>
+          <p>Запись и все вопросы — в Telegram. Напишите, и мы ответим.</p>
+        </div>
+        <a class="btn btn-primary" data-bot="final" href="#"><svg><use href="#tg"/></svg>Написать в Telegram</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year">2026</span> Алина Пензева и команда</span>
+    <a data-bot="footer" href="#">Telegram</a>
+  </div>
+</footer>
+
+<div class="sticky-cta" id="stickyCta">
+  <a class="btn btn-primary" data-bot="mobile" href="#"><svg><use href="#tg"/></svg>Подобрать репетитора</a>
+</div>
+
+<script>
+  /* ================================================================
+     НАСТРОЙКА: куда ведут все кнопки «Записаться / Написать».
+
+     • Пока бота нет — впишите личный Telegram Алины:
+         'https://t.me/username'
+     • Когда бот появится — замените на ссылку бота:
+         'https://t.me/имя_бота_bot'
+       Для бота (имя оканчивается на «bot») каждая кнопка сама
+       добавит ?start=<метка>, чтобы бот видел, к какому
+       преподавателю хочет человек (alina, maria, arseniy,
+       nikita, masha, help, hero ...).
+     ================================================================ */
+  const TG_URL = 'https://t.me/your_username';
+
+  const isBot = /bot\/?$/i.test(TG_URL);
+  document.querySelectorAll('[data-bot]').forEach(a => {
+    a.href = isBot ? TG_URL.replace(/\/$/, '') + '?start=' + a.dataset.bot : TG_URL;
+    a.target = '_blank';
+    a.rel = 'noopener';
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // фильтр преподавателей
+  const chips = document.querySelectorAll('.chip');
+  const cards = document.querySelectorAll('.team .card');
+  chips.forEach(chip => chip.addEventListener('click', () => {
+    chips.forEach(c => c.setAttribute('aria-pressed', c === chip));
+    const f = chip.dataset.filter;
+    cards.forEach(card => {
+      const show = f === 'all' || card.hasAttribute('data-always') || card.dataset.subjects.split(' ').includes(f);
+      card.hidden = !show;
+      if (show) card.classList.add('in');
+    });
+  }));
+
+  // шапка и мобильная кнопка
+  const header = document.querySelector('header');
+  const sticky = document.getElementById('stickyCta');
+  const heroCta = document.querySelector('.hero-cta');
+  const finalBox = document.querySelector('.final-box');
+  const onScroll = () => {
+    header.classList.toggle('scrolled', scrollY > 8);
+    const pastHero = heroCta.getBoundingClientRect().bottom < 0;
+    const atFinal = finalBox.getBoundingClientRect().top < innerHeight;
+    sticky.classList.toggle('show', pastHero && !atFinal);
+  };
+  addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  // появление блоков
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }), {threshold:.12, rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  }
+</script>
+</body>
+</html>
