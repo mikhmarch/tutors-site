@@ -3,11 +3,17 @@
 Чтобы добавить или изменить преподавателя, достаточно поправить этот файл.
 Ключ (alina, maria, ...) совпадает с меткой на сайте: кнопка «Записаться»
 у Марии открывает бота по ссылке ?start=maria.
+
+Короткие подзаголовки и полные тексты о преподавателях лежат в bios.py.
 """
+
+from bios import BIOS, TAGLINES
 
 SUBJECTS = {
     "math": "Математика",
     "chem": "Химия",
+    "phys": "Физика",
+    "rus": "Русский язык",
     "eng": "Английский язык",
 }
 
@@ -16,44 +22,49 @@ TUTORS = {
         "name": "Алина Пензева",
         "name_to": "Алине",  # «Записаться к Алине»
         "subjects": ["math"],
-        "role": "Основатель команды",
-        # Короткий текст о преподавателе. Пустая строка = не показывать.
-        "about": "",
+        "role": "Основатель онлайн-школы",
         "photo": "alina-penzeva.jpg",
     },
     "maria": {
         "name": "Мария Бурцева",
-        "name_to": "Марии",
-        "subjects": ["math", "chem"],
+        "name_to": "Марии Бурцевой",
+        "subjects": ["math", "chem", "phys"],
         "role": "",
-        "about": "",
         "photo": "maria-burtseva.jpg",
+    },
+    "roman": {
+        "name": "Роман Зворыгин",
+        "name_to": "Роману",
+        "subjects": ["chem"],
+        "role": "Подготовка к ЕГЭ по химии",
+        "photo": "roman-zvorygin.jpg",
     },
     "arseniy": {
         "name": "Арсений Ломакин",
         "name_to": "Арсению",
-        "subjects": ["math", "chem"],
+        "subjects": ["math", "eng"],
         "role": "",
-        "about": "",
         "photo": "arseniy-lomakin.jpg",
     },
-    "nikita": {
-        "name": "Никита Левин",
-        "name_to": "Никите",
-        "subjects": ["chem"],
+    "nina": {
+        "name": "Нина Насонова",
+        "name_to": "Нине",
+        "subjects": ["rus", "phys"],
         "role": "",
-        "about": "",
-        "photo": "nikita-levin.jpg",
+        "photo": "nina-nasonova.jpg",
     },
     "masha": {
-        "name": "Маша Каратаева",
-        "name_to": "Маше",
+        "name": "Мария Каратаева",
+        "name_to": "Марии Каратаевой",
         "subjects": ["eng"],
         "role": "",
-        "about": "",
         "photo": "masha-karataeva.jpg",
     },
 }
+
+for _tid, _t in TUTORS.items():
+    _t["about"] = TAGLINES.get(_tid, "")
+    _t["bio"] = BIOS.get(_tid, "")
 
 GRADES = [
     "1–4 класс",
@@ -65,7 +76,7 @@ GRADES = [
 
 WELCOME = (
     "Привет! Это бот <b>Алины Пензевой</b> и команды репетиторов "
-    "по математике, химии и английскому.\n\n"
+    "по математике, химии, физике, русскому и английскому языку.\n\n"
     "Здесь можно познакомиться с преподавателями и оставить заявку. "
     "Мы свяжемся с вами, поможем выбрать преподавателя и время."
 )

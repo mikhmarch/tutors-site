@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Алина Пензева и команда репетиторов</title>
-<meta name="description" content="Репетиторы по математике, химии и английскому языку. Команда Алины Пензевой — подберём преподавателя в Telegram.">
+<meta name="description" content="Онлайн-школа Алины Пензевой: преподаватели математики, химии, физики, русского и английского языка. Подготовка к ОГЭ и ЕГЭ.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Unbounded:wght@500;600;700&display=swap&subset=cyrillic" rel="stylesheet">
@@ -82,7 +82,8 @@
   .hero p.lead{font-size:19px;color:var(--muted);max-width:520px;margin-bottom:36px}
   .hero-cta{display:flex;flex-wrap:wrap;gap:12px}
   .subjects{display:flex;gap:10px;flex-wrap:wrap;margin-top:40px}
-  .subj{border:1px solid var(--line);border-radius:14px;padding:10px 16px;font-weight:600;font-size:15px}
+  .subj{border:1px solid var(--line);border-radius:14px;padding:10px 16px;font-weight:600;font-size:15px;transition:background .2s}
+  .subj:hover{background:var(--cloud)}
   .subj span{color:var(--muted);font-weight:500}
 
   .hero-photo{position:relative}
@@ -136,27 +137,80 @@
   .team{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
   .card{display:flex;flex-direction:column;transition:opacity .25s,transform .25s}
   .card[hidden]{display:none}
-  .card .ph{border-radius:var(--r-md);overflow:hidden;aspect-ratio:4/5;background:var(--photo);position:relative}
+  .card .ph{
+    display:block;width:100%;border:0;padding:0;cursor:pointer;font:inherit;
+    border-radius:var(--r-md);overflow:hidden;aspect-ratio:4/5;background:var(--photo);position:relative;
+  }
   .card .ph img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;transition:transform .6s}
   .card:hover .ph img{transform:scale(1.04)}
   .card .lead-tag{
     position:absolute;top:16px;left:16px;background:#fff;border-radius:999px;padding:6px 12px;
-    font-size:13px;font-weight:700;
+    font-size:13px;font-weight:700;color:var(--ink);
   }
   .card-body{padding:20px 4px 0;display:flex;flex-direction:column;gap:12px;flex:1}
   .card h3{font-size:21px}
   .tags{display:flex;gap:6px;flex-wrap:wrap}
-  .tag{font-size:14px;font-weight:600;padding:5px 12px;border-radius:999px}
+  .tag{font-size:14px;font-weight:600;padding:5px 12px;border-radius:999px;background:var(--cloud)}
   .tag.math{background:var(--lav)} .tag.chem{background:var(--sky)} .tag.eng{background:var(--mist)}
-  .card .btn{margin-top:auto;align-self:flex-start}
-  .card-cta{
-    border-radius:var(--r-md);background:var(--ink);color:#fff;padding:32px;display:flex;flex-direction:column;
-    justify-content:space-between;gap:24px;min-height:100%;
+  .tag.phys{background:#C9D6FF} .tag.rus{background:#E2DDFF}
+  .tagline{color:var(--muted);font-size:15px;line-height:1.5}
+  .card-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:4px}
+  .card-actions .btn{flex:1 1 auto}
+  button.btn{border:0;font-family:inherit;cursor:pointer}
+
+  .help-strip{
+    margin-top:32px;border-radius:var(--r-md);background:var(--ink);color:#fff;padding:32px 36px;
+    display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
   }
-  .card-cta h3{font-size:24px}
-  .card-cta p{color:rgba(255,255,255,.72)}
-  .card-cta .btn-primary{background:#fff;color:var(--ink);box-shadow:none}
-  .card-cta .btn-primary:hover{background:var(--cloud)}
+  .help-strip h3{font-size:22px;margin-bottom:6px}
+  .help-strip p{color:rgba(255,255,255,.72)}
+  .help-strip .btn-primary{background:#fff;color:var(--ink);box-shadow:none}
+  .help-strip .btn-primary:hover{background:var(--cloud)}
+
+  /* карточка преподавателя (модальное окно) */
+  .modal{
+    border:0;padding:0;margin:auto;width:min(980px,calc(100% - 32px));max-height:calc(100dvh - 48px);
+    border-radius:var(--r-lg);background:#fff;color:var(--ink);overflow:hidden;
+    box-shadow:0 40px 80px -30px rgba(28,29,71,.5);
+  }
+  .modal::backdrop{background:rgba(28,29,71,.45);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+  .modal[open]{animation:pop .25s ease}
+  @keyframes pop{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+  .modal-inner{display:grid;grid-template-columns:360px 1fr;height:min(760px,calc(100dvh - 48px))}
+  .modal-photo{background:var(--photo)}
+  .modal-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 18%}
+  .modal-content{overflow-y:auto;min-height:0;padding:40px 44px 0;display:flex;flex-direction:column}
+  .modal-close{
+    position:absolute;top:16px;right:16px;z-index:2;width:44px;height:44px;border-radius:50%;border:0;cursor:pointer;
+    background:rgba(255,255,255,.92);color:var(--ink);font-size:26px;line-height:1;display:grid;place-items:center;
+    box-shadow:0 4px 14px -6px rgba(28,29,71,.4);
+  }
+  .modal-close:hover{background:var(--cloud)}
+  .modal h3{font-size:28px;margin:0 48px 12px 0}
+  .bio{margin-top:20px}
+  .bio p{margin-bottom:14px}
+  .bio .bio-lead{font-weight:700;font-size:18px;line-height:1.45}
+  .bio h4{font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:26px 0 12px}
+  .bio ul{list-style:none;display:grid;gap:10px;margin-bottom:16px}
+  .bio li{position:relative;padding-left:32px}
+  .bio ul.checks li::before{
+    content:"";position:absolute;left:0;top:3px;width:20px;height:20px;border-radius:50%;
+    background:var(--lav) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 10.5l3 3 6-6.5' fill='none' stroke='%231C1D47' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat;
+  }
+  .bio ul.dots li::before{content:"";position:absolute;left:8px;top:10px;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  .approach{background:var(--cloud);border-radius:var(--r-md);padding:4px 24px 10px;margin:24px 0 8px}
+  .approach h4{margin-top:22px}
+  .approach .approach-main{font-weight:700;font-size:17px}
+  .bio blockquote{
+    margin:24px 0 8px;padding:4px 0 4px 20px;border-left:4px solid var(--lav);
+    font-style:italic;font-size:17px;color:var(--ink);
+  }
+  .modal-cta{
+    position:sticky;bottom:0;margin-top:auto;padding:20px 0 28px;
+    background:linear-gradient(rgba(255,255,255,0),#fff 30%);
+  }
+  .modal-cta .btn{width:100%}
+  body:has(.modal[open]){overflow:hidden}
 
   /* как начать */
   .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
@@ -200,6 +254,8 @@
   @media (max-width:980px){
     .hero-grid,.about-grid{grid-template-columns:1fr}
     .hero-photo{max-width:440px;margin:8px auto 0;width:100%}
+    .modal-inner{grid-template-columns:280px 1fr}
+    .modal-content{padding:32px 28px 0}
     .team{grid-template-columns:repeat(2,minmax(0,1fr))}
     .final-box{grid-template-columns:1fr;padding:56px 40px}
     .nav-links{display:none}
@@ -219,14 +275,24 @@
     .about-text p{font-size:17px}
     .team{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
     .card h3{font-size:16px}
+    .card-body{padding-top:14px;gap:10px}
+    .card-actions{flex-direction:column;gap:6px}
     .card .btn{width:100%;padding:11px 8px;font-size:14px;gap:6px}
     .card .btn svg{width:16px;height:16px}
-    .card-cta .btn{white-space:normal;text-align:center}
     .card .lead-tag{top:10px;left:10px;font-size:11px;padding:4px 9px}
     .tag{font-size:12px;padding:4px 9px}
-    .card-cta{padding:22px}
-    .card-cta h3{font-size:18px}
-    .card-cta p{font-size:14px}
+    .tagline{font-size:13px;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+    .help-strip{padding:26px 22px}
+    .help-strip h3{font-size:19px}
+    .help-strip .btn{width:100%}
+    .modal{width:100%;max-width:100%;max-height:100dvh;height:100dvh;margin:0;border-radius:0}
+    .modal-inner{grid-template-columns:1fr;grid-template-rows:auto 1fr;max-height:100dvh;height:100%;overflow-y:auto}
+    .modal-photo{height:min(52vh,400px)}
+    .modal-content{overflow:visible;padding:24px 20px 0}
+    .modal h3{font-size:23px;margin-right:0}
+    .bio .bio-lead{font-size:17px}
+    .approach{padding:2px 18px 8px}
+    .modal-cta{padding:16px 0 20px}
     .steps{grid-template-columns:1fr}
     .step{min-height:auto}
     .step .num{font-size:40px}
@@ -274,17 +340,19 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div class="reveal">
-        <div class="eyebrow"><b></b>Математика · Химия · Английский</div>
+        <div class="eyebrow"><b></b>Онлайн-школа · ОГЭ и ЕГЭ</div>
         <h1>Объясняем так, что <em>становится понятно</em></h1>
-        <p class="lead">Я&nbsp;Алина, репетитор по&nbsp;математике. Вместе с&nbsp;командой помогаем школьникам разобраться в&nbsp;предмете, закрыть пробелы и&nbsp;спокойно подготовиться к&nbsp;экзаменам.</p>
+        <p class="lead">Я&nbsp;Алина, преподаватель математики и&nbsp;основатель онлайн-школы. Вместе с&nbsp;командой помогаем школьникам разобраться в&nbsp;предмете, закрыть пробелы и&nbsp;уверенно подготовиться к&nbsp;экзаменам.</p>
         <div class="hero-cta">
           <a class="btn btn-primary" data-bot="hero" href="#"><svg><use href="#tg"/></svg>Подобрать репетитора</a>
           <a class="btn btn-ghost" href="#team">Познакомиться с командой</a>
         </div>
         <div class="subjects">
-          <div class="subj">Математика <span>· 3 преподавателя</span></div>
-          <div class="subj">Химия <span>· 3 преподавателя</span></div>
-          <div class="subj">Английский <span>· 1 преподаватель</span></div>
+          <a class="subj" href="#team" data-goto="math">Математика</a>
+          <a class="subj" href="#team" data-goto="chem">Химия</a>
+          <a class="subj" href="#team" data-goto="phys">Физика</a>
+          <a class="subj" href="#team" data-goto="rus">Русский язык</a>
+          <a class="subj" href="#team" data-goto="eng">Английский язык</a>
         </div>
       </div>
 
@@ -293,7 +361,7 @@
         <div class="frame">
           <img src="img/alina-penzeva.webp" alt="Алина Пензева, репетитор по математике" width="1024" height="1280" fetchpriority="high">
         </div>
-        <div class="badge"><b>Алина Пензева</b><span>Основатель команды · математика</span></div>
+        <div class="badge"><b>Алина Пензева</b><span>Основатель онлайн-школы · математика</span></div>
       </div>
     </div>
   </section>
@@ -303,23 +371,23 @@
     <div class="wrap about-grid">
       <div class="about-text reveal">
         <div class="kicker">Обо мне</div>
-        <h2 style="font-size:clamp(28px,3.4vw,42px);margin-bottom:28px">Собрала команду, в&nbsp;которой уверена сама</h2>
-        <p>Каждый преподаватель здесь объясняет свой предмет спокойно, по&nbsp;шагам и&nbsp;без зубрёжки.</p>
+        <h2 style="font-size:clamp(28px,3.4vw,42px);margin-bottom:28px">Результат каждого ученика имеет значение</h2>
+        <p>Я&nbsp;преподаю математику больше 4&nbsp;лет и&nbsp;собрала команду преподавателей математики, химии, физики, русского и&nbsp;английского языка.</p>
         <p>Если вы&nbsp;не&nbsp;знаете, к&nbsp;кому идти, напишите мне в&nbsp;Telegram: расскажите о&nbsp;цели, а&nbsp;я&nbsp;помогу выбрать преподавателя.</p>
-        <p class="sign">— Алина</p>
+        <p class="sign">«Я&nbsp;хочу, чтобы мои ученики не&nbsp;просто умели решать задачи, а&nbsp;верили в&nbsp;собственные силы». — Алина</p>
       </div>
       <div class="principles reveal">
         <div class="pr">
           <div class="pr-n">01</div>
-          <div><h3>Сначала находим пробелы</h3><p>Понимаем, на&nbsp;каком месте застрял ученик, и&nbsp;начинаем оттуда, а&nbsp;не&nbsp;с&nbsp;середины учебника.</p></div>
+          <div><h3>Индивидуальная работа</h3><p>Занятия строятся вокруг конкретного ученика: его пробелов, цели и&nbsp;темпа.</p></div>
         </div>
         <div class="pr">
           <div class="pr-n">02</div>
-          <div><h3>Объясняем, а&nbsp;не&nbsp;диктуем</h3><p>Ученик сам приходит к&nbsp;решению, поэтому тема остаётся в&nbsp;голове и&nbsp;после занятия.</p></div>
+          <div><h3>Поддержка 24/7</h3><p>Ребёнок не&nbsp;остаётся один на&nbsp;один с&nbsp;трудностями после окончания урока.</p></div>
         </div>
         <div class="pr">
           <div class="pr-n">03</div>
-          <div><h3>Подбираем под цель</h3><p>Экзамен, олимпиада или текущие оценки: подберём преподавателя под задачу и&nbsp;характер ученика.</p></div>
+          <div><h3>Без страха ошибиться</h3><p>Нет «глупых» вопросов. Есть понятные объяснения, последовательная работа и&nbsp;движение к&nbsp;результату.</p></div>
         </div>
       </div>
     </div>
@@ -337,66 +405,233 @@
           <button class="chip" data-filter="all" aria-pressed="true">Все</button>
           <button class="chip" data-filter="math" aria-pressed="false">Математика</button>
           <button class="chip" data-filter="chem" aria-pressed="false">Химия</button>
-          <button class="chip" data-filter="eng" aria-pressed="false">Английский</button>
+          <button class="chip" data-filter="phys" aria-pressed="false">Физика</button>
+          <button class="chip" data-filter="rus" aria-pressed="false">Русский язык</button>
+          <button class="chip" data-filter="eng" aria-pressed="false">Английский язык</button>
         </div>
       </div>
 
       <div class="team">
-        <article class="card reveal" data-subjects="math">
-          <div class="ph">
+        <article class="card reveal" data-subjects="math" data-tutor="alina">
+          <button class="ph" type="button" data-open="alina" aria-label="Подробнее: Алина Пензева">
             <img src="img/alina-penzeva.webp" alt="Алина Пензева" loading="lazy" width="1024" height="1280">
             <span class="lead-tag">Основатель</span>
-          </div>
+          </button>
           <div class="card-body">
             <h3>Алина Пензева</h3>
             <div class="tags"><span class="tag math">Математика</span></div>
-            <a class="btn btn-ghost btn-sm" data-bot="alina" href="#"><svg><use href="#tg"/></svg>Записаться</a>
+            <p class="tagline">Основатель онлайн-школы. Преподаватель, для которого результат каждого ученика имеет значение.</p>
+            <div class="card-actions">
+              <button class="btn btn-ghost btn-sm" type="button" data-open="alina">Подробнее</button>
+              <a class="btn btn-primary btn-sm" data-bot="alina" href="#"><svg><use href="#tg"/></svg>Записаться</a>
+            </div>
+          </div>
+          <div class="bio" hidden>
+            <p class="bio-lead">Основатель онлайн-школы. Преподаватель, для которого результат каждого ученика имеет значение.</p>
+            <p>Алина — преподаватель математики с опытом работы более 4 лет. За это время она помогла ученикам разных возрастов разобраться в сложных темах, повысить уверенность в своих знаниях и добиться успехов в обучении.</p>
+            <h4>Образование и профессиональный опыт</h4>
+            <ul class="checks">
+            <li>Высшее образование по направлению «Химическая технология».</li>
+            <li>Обучение в магистратуре по направлению «Инфохимия».</li>
+            <li>Более 4 лет преподавательской практики.</li>
+            <li>Постоянное профессиональное развитие и совершенствование методик обучения.</li>
+            <li>Успешный опыт работы с учениками разного возраста и уровня подготовки.</li>
+            </ul>
+            <div class="approach">
+            <h4>Особенность подхода</h4>
+            <p class="approach-main">Индивидуальная работа с каждым учеником и поддержка 24/7.</p>
+            <p>Алина убеждена, что ребёнок не должен оставаться один на один с трудностями после окончания урока.</p>
+            <p>На занятиях нет страха ошибиться или задать «глупый» вопрос. Есть понятные объяснения, последовательная работа и движение к результату.</p>
+            </div>
+            <blockquote>«Я хочу, чтобы мои ученики не просто умели решать задачи, а верили в собственные силы. Ведь уверенность в себе — первый шаг к любому результату».</blockquote>
           </div>
         </article>
-
-        <article class="card reveal" data-subjects="math chem">
-          <div class="ph"><img src="img/maria-burtseva.webp" alt="Мария Бурцева" loading="lazy" width="1191" height="1269"></div>
+        <article class="card reveal" data-subjects="math chem phys" data-tutor="maria">
+          <button class="ph" type="button" data-open="maria" aria-label="Подробнее: Мария Бурцева">
+            <img src="img/maria-burtseva.webp" alt="Мария Бурцева" loading="lazy" width="1191" height="1269">
+          </button>
           <div class="card-body">
             <h3>Мария Бурцева</h3>
-            <div class="tags"><span class="tag math">Математика</span><span class="tag chem">Химия</span></div>
-            <a class="btn btn-ghost btn-sm" data-bot="maria" href="#"><svg><use href="#tg"/></svg>Записаться</a>
+            <div class="tags"><span class="tag math">Математика</span><span class="tag chem">Химия</span><span class="tag phys">Физика</span></div>
+            <p class="tagline">Научный подход к преподаванию и многолетний опыт подготовки к экзаменам.</p>
+            <div class="card-actions">
+              <button class="btn btn-ghost btn-sm" type="button" data-open="maria">Подробнее</button>
+              <a class="btn btn-primary btn-sm" data-bot="maria" href="#"><svg><use href="#tg"/></svg>Записаться</a>
+            </div>
+          </div>
+          <div class="bio" hidden>
+            <p class="bio-lead">Научный подход к преподаванию и многолетний опыт подготовки к экзаменам.</p>
+            <p>Мария — преподаватель, который объединяет глубокую теоретическую подготовку, практический научный опыт и искреннюю заинтересованность в успехах своих учеников.</p>
+            <p>За её плечами — десятки успешно сданных экзаменов и большой опыт работы со школьниками разного уровня подготовки.</p>
+            <h4>Образование и достижения</h4>
+            <ul class="checks">
+            <li>Высшее образование Санкт-Петербургского горного университета по направлению «Химическая технология».</li>
+            <li>Большой опыт подготовки к ОГЭ по химии и математике.</li>
+            <li>Десятки успешных экзаменационных результатов учеников.</li>
+            <li>Работа в научном центре физической и аналитической химии Горного университета.</li>
+            <li>Научная публикация в профильном журнале.</li>
+            </ul>
+            <div class="approach">
+            <h4>Особенность подхода</h4>
+            <p class="approach-main">Сочетание научной точности и доступного объяснения.</p>
+            <p>Мария помогает ученикам выстроить целостное понимание предмета, а не просто запоминать отдельные формулы и алгоритмы.</p>
+            <p>Особое внимание уделяется устранению пробелов в знаниях, развитию логического мышления и системной подготовке к экзаменам.</p>
+            </div>
+            <blockquote>«Наука становится по-настоящему интересной, когда за сложными формулами начинаешь видеть простую и понятную логику».</blockquote>
           </div>
         </article>
-
-        <article class="card reveal" data-subjects="math chem">
-          <div class="ph"><img src="img/arseniy-lomakin.webp" alt="Арсений Ломакин" loading="lazy" width="1280" height="1169"></div>
+        <article class="card reveal" data-subjects="chem" data-tutor="roman">
+          <button class="ph" type="button" data-open="roman" aria-label="Подробнее: Роман Зворыгин">
+            <img src="img/roman-zvorygin.webp" alt="Роман Зворыгин" loading="lazy" width="1024" height="1280">
+          </button>
+          <div class="card-body">
+            <h3>Роман Зворыгин</h3>
+            <div class="tags"><span class="tag chem">Химия · ЕГЭ</span></div>
+            <p class="tagline">100 баллов на ЕГЭ. Победы в олимпиадах. Системная подготовка к высоким результатам.</p>
+            <div class="card-actions">
+              <button class="btn btn-ghost btn-sm" type="button" data-open="roman">Подробнее</button>
+              <a class="btn btn-primary btn-sm" data-bot="roman" href="#"><svg><use href="#tg"/></svg>Записаться</a>
+            </div>
+          </div>
+          <div class="bio" hidden>
+            <p class="bio-lead">100 баллов на ЕГЭ. Победы в олимпиадах. Системная подготовка к высоким результатам.</p>
+            <p>Роман — преподаватель химии, который знает, как выглядит путь к максимальному баллу на экзамене, на собственном опыте.</p>
+            <p>Глубокая предметная подготовка, внимательность к деталям и системный подход позволяют ему выстраивать эффективную работу с учениками разного уровня.</p>
+            <h4>Образование и достижения</h4>
+            <ul class="checks">
+            <li>100 баллов на ЕГЭ по химии.</li>
+            <li>Победитель многочисленных олимпиад по химии.</li>
+            <li>Высшее образование по направлению «Химическая технология».</li>
+            <li>Серьёзная теоретическая подготовка и глубокое понимание предмета.</li>
+            <li>Ответственный и внимательный подход к организации занятий.</li>
+            </ul>
+            <div class="approach">
+            <h4>Особенность подхода</h4>
+            <p class="approach-main">Точная диагностика пробелов в знаниях и последовательное их устранение.</p>
+            <p>Роман помогает ученикам не просто запоминать алгоритмы решения экзаменационных задач, а понимать химические процессы и уверенно применять знания даже в нестандартных ситуациях.</p>
+            <p>Особое внимание уделяет заданиям повышенной сложности, аккуратности вычислений и формированию устойчивых навыков решения.</p>
+            </div>
+            <blockquote>«Высокий балл — это не случайность и не удача. Это результат системной работы, понимания предмета и внимания к каждой детали».</blockquote>
+          </div>
+        </article>
+        <article class="card reveal" data-subjects="math eng" data-tutor="arseniy">
+          <button class="ph" type="button" data-open="arseniy" aria-label="Подробнее: Арсений Ломакин">
+            <img src="img/arseniy-lomakin.webp" alt="Арсений Ломакин" loading="lazy" width="1280" height="1169">
+          </button>
           <div class="card-body">
             <h3>Арсений Ломакин</h3>
-            <div class="tags"><span class="tag math">Математика</span><span class="tag chem">Химия</span></div>
-            <a class="btn btn-ghost btn-sm" data-bot="arseniy" href="#"><svg><use href="#tg"/></svg>Записаться</a>
+            <div class="tags"><span class="tag math">Математика</span><span class="tag eng">Английский язык</span></div>
+            <p class="tagline">Серьёзная техническая подготовка, международная образовательная среда и широкий кругозор.</p>
+            <div class="card-actions">
+              <button class="btn btn-ghost btn-sm" type="button" data-open="arseniy">Подробнее</button>
+              <a class="btn btn-primary btn-sm" data-bot="arseniy" href="#"><svg><use href="#tg"/></svg>Записаться</a>
+            </div>
+          </div>
+          <div class="bio" hidden>
+            <p class="bio-lead">Серьёзная техническая подготовка, международная образовательная среда и широкий кругозор.</p>
+            <p>Арсений — преподаватель, который сочетает фундаментальные знания технических наук с практическим владением английским языком.</p>
+            <p>Его подход основан на глубоком понимании предмета и умении объяснять сложные вещи доступным языком.</p>
+            <h4>Образование и достижения</h4>
+            <ul class="checks">
+            <li>Высшее образование по направлению «Химическая технология».</li>
+            <li>Обучение на английском языке.</li>
+            <li>Практический опыт в крупнейших нефтехимических корпорациях.</li>
+            <li>Участие в олимпиадных проектах, организованных «Газпромом» и «Яндексом».</li>
+            <li>Опыт работы с учениками разных возрастов — от самых маленьких до взрослых.</li>
+            </ul>
+            <div class="approach">
+            <h4>Особенность подхода</h4>
+            <p class="approach-main">Умение выходить за рамки стандартной школьной программы.</p>
+            <p>Арсений не ограничивается объяснением формул и правил. Он помогает увидеть взаимосвязь между предметами, развивает аналитическое мышление и всегда готов ответить на дополнительные вопросы ученика.</p>
+            <p>Его занятия подходят тем, кто хочет не только улучшить оценки, но и получить действительно глубокие знания.</p>
+            </div>
+            <blockquote>«Настоящее понимание начинается тогда, когда ученик перестаёт спрашивать, какую формулу использовать, и начинает понимать, почему она работает».</blockquote>
           </div>
         </article>
-
-        <article class="card reveal" data-subjects="chem">
-          <div class="ph"><img src="img/nikita-levin.webp" alt="Никита Левин" loading="lazy" width="1122" height="1402"></div>
+        <article class="card reveal" data-subjects="rus phys" data-tutor="nina">
+          <button class="ph" type="button" data-open="nina" aria-label="Подробнее: Нина Насонова">
+            <img src="img/nina-nasonova.webp" alt="Нина Насонова" loading="lazy" width="1254" height="1254">
+          </button>
           <div class="card-body">
-            <h3>Никита Левин</h3>
-            <div class="tags"><span class="tag chem">Химия</span></div>
-            <a class="btn btn-ghost btn-sm" data-bot="nikita" href="#"><svg><use href="#tg"/></svg>Записаться</a>
+            <h3>Нина Насонова</h3>
+            <div class="tags"><span class="tag rus">Русский язык</span><span class="tag phys">Физика</span></div>
+            <p class="tagline">Золотая медалистка, победитель олимпиад и преподаватель, который учит не заучивать правила, а понимать язык.</p>
+            <div class="card-actions">
+              <button class="btn btn-ghost btn-sm" type="button" data-open="nina">Подробнее</button>
+              <a class="btn btn-primary btn-sm" data-bot="nina" href="#"><svg><use href="#tg"/></svg>Записаться</a>
+            </div>
+          </div>
+          <div class="bio" hidden>
+            <p class="bio-lead">Золотая медалистка, победитель олимпиад и преподаватель, который учит не заучивать правила, а понимать язык.</p>
+            <p>Нина — целеустремлённый и разносторонний преподаватель, сочетающий фундаментальную академическую подготовку, аналитическое мышление и внимательное отношение к каждому ученику.</p>
+            <p>За её плечами — выдающиеся достижения в учёбе, победы в олимпиадах и серьёзная университетская подготовка.</p>
+            <h4>Образование и достижения</h4>
+            <ul class="checks">
+            <li>Две золотые медали: за окончание школы с отличием и медаль Губернатора Рязанской области за особые успехи в обучении.</li>
+            <li>Победитель и призёр олимпиад по русскому языку, математике, химии и географии, в том числе призёр межрегиональной олимпиады по русскому языку.</li>
+            <li>Выпускница Санкт-Петербургского горного университета по направлению «Химическая технология» (2026).</li>
+            <li>Продолжает обучение в магистратуре Горного университета.</li>
+            <li>Опыт работы с научными текстами, структурирования информации и аргументированного письменного изложения.</li>
+            <li>Активная лидерская позиция: главная староста первого курса, участница университетских спортивных соревнований и волонтёрских проектов.</li>
+            </ul>
+            <div class="approach">
+            <h4>Особенность преподавания</h4>
+            <p class="approach-main">Понимание вместо зубрёжки.</p>
+            <p>Нина убеждена, что русский язык — это не бесконечный список исключений, а логичная система, которую можно научиться понимать.</p>
+            <p>На занятиях особое внимание уделяется:</p>
+            <ul class="dots">
+            <li>Развитию грамотной письменной и устной речи.</li>
+            <li>Понятному объяснению сложных правил через логику и ассоциации.</li>
+            <li>Умению анализировать тексты, аргументировать свою позицию и грамотно выражать мысли.</li>
+            <li>Системному устранению пробелов и формированию уверенности в собственных знаниях.</li>
+            </ul>
+            <p>Нина сочетает дисциплину, требовательность и искреннюю поддержку. Она умеет мотивировать, находить подход к ученику и создавать атмосферу, в которой не страшно задавать вопросы и совершать ошибки.</p>
+            </div>
+            <blockquote>«Я хочу научить своих учеников не просто запоминать правила, а понимать и чувствовать русский язык. Настоящая грамотность начинается тогда, когда за каждым правилом видишь смысл».</blockquote>
           </div>
         </article>
-
-        <article class="card reveal" data-subjects="eng">
-          <div class="ph"><img src="img/masha-karataeva.webp" alt="Маша Каратаева" loading="lazy" width="1024" height="1280"></div>
+        <article class="card reveal" data-subjects="eng" data-tutor="masha">
+          <button class="ph" type="button" data-open="masha" aria-label="Подробнее: Мария Каратаева">
+            <img src="img/masha-karataeva.webp" alt="Мария Каратаева" loading="lazy" width="1024" height="1280">
+          </button>
           <div class="card-body">
-            <h3>Маша Каратаева</h3>
+            <h3>Мария Каратаева</h3>
             <div class="tags"><span class="tag eng">Английский язык</span></div>
-            <a class="btn btn-ghost btn-sm" data-bot="masha" href="#"><svg><use href="#tg"/></svg>Записаться</a>
+            <p class="tagline">Английский язык как инструмент реального общения, профессионального роста и новых возможностей.</p>
+            <div class="card-actions">
+              <button class="btn btn-ghost btn-sm" type="button" data-open="masha">Подробнее</button>
+              <a class="btn btn-primary btn-sm" data-bot="masha" href="#"><svg><use href="#tg"/></svg>Записаться</a>
+            </div>
+          </div>
+          <div class="bio" hidden>
+            <p class="bio-lead">Английский язык как инструмент реального общения, профессионального роста и новых возможностей.</p>
+            <p>Мария — преподаватель, для которого английский является не только предметом изучения, но и неотъемлемой частью профессиональной жизни.</p>
+            <p>Ежедневное общение с иностранными партнёрами позволяет ей делиться актуальными языковыми навыками, которые действительно используются за пределами учебников.</p>
+            <h4>Образование и профессиональный опыт</h4>
+            <ul class="checks">
+            <li>Высшее образование Санкт-Петербургского политехнического университета по направлению «Гостиничный и ресторанный бизнес».</li>
+            <li>Работа в крупной международной гостиничной сети.</li>
+            <li>Постоянное использование английского языка в профессиональной деятельности.</li>
+            <li>Ведение крупных проектов с участием иностранных партнёров.</li>
+            <li>Непрерывное совершенствование языковых и коммуникативных навыков.</li>
+            </ul>
+            <div class="approach">
+            <h4>Особенность подхода</h4>
+            <p class="approach-main">Развитие естественной и уверенной разговорной речи.</p>
+            <p>Мария уделяет особое внимание преодолению языкового барьера, правильному произношению и умению свободно выражать свои мысли.</p>
+            <p>Её цель — довести основные речевые конструкции до автоматизма, чтобы английский стал привычным способом общения, а не постоянным переводом в голове.</p>
+            </div>
+            <blockquote>«Свободное владение английским — это не умение идеально помнить каждое правило. Это уверенность, с которой ты можешь выразить любую свою мысль».</blockquote>
           </div>
         </article>
+      </div>
 
-        <article class="card reveal" data-subjects="math chem eng" data-always>
-          <div class="card-cta">
-            <h3>Не знаете, кого выбрать?</h3>
-            <p>Напишите, какой предмет и какая цель. Мы подскажем, кто из команды подойдёт лучше.</p>
-            <a class="btn btn-primary btn-sm" data-bot="help" href="#"><svg><use href="#tg"/></svg>Помогите выбрать</a>
-          </div>
-        </article>
+      <div class="help-strip reveal">
+        <div>
+          <h3>Не знаете, кого выбрать?</h3>
+          <p>Напишите, какой предмет и какая цель. Подскажем, кто из команды подойдёт лучше.</p>
+        </div>
+        <a class="btn btn-primary" data-bot="help" href="#"><svg><use href="#tg"/></svg>Помогите выбрать</a>
       </div>
     </div>
   </section>
@@ -456,6 +691,22 @@
   <a class="btn btn-primary" data-bot="mobile" href="#"><svg><use href="#tg"/></svg>Подобрать репетитора</a>
 </div>
 
+<!-- Карточка преподавателя: заполняется из блока .bio нужной карточки -->
+<dialog class="modal" id="tutorModal" aria-labelledby="mName">
+  <button class="modal-close" type="button" aria-label="Закрыть">×</button>
+  <div class="modal-inner">
+    <div class="modal-photo"><img id="mImg" src="" alt=""></div>
+    <div class="modal-content">
+      <h3 id="mName"></h3>
+      <div class="tags" id="mTags"></div>
+      <div class="bio" id="mBio"></div>
+      <div class="modal-cta">
+        <a class="btn btn-primary" id="mCta" href="#" target="_blank" rel="noopener"><svg><use href="#tg"/></svg>Записаться на занятие</a>
+      </div>
+    </div>
+  </div>
+</dialog>
+
 <script>
   /* ================================================================
      НАСТРОЙКА: куда ведут все кнопки «Записаться / Написать».
@@ -466,14 +717,15 @@
          'https://t.me/имя_бота_bot'
        Для бота (имя оканчивается на «bot») каждая кнопка сама
        добавит ?start=<метка>, чтобы бот видел, к какому
-       преподавателю хочет человек (alina, maria, arseniy,
-       nikita, masha, help, hero ...).
+       преподавателю хочет человек (alina, maria, roman,
+       arseniy, nina, masha, help, hero ...).
      ================================================================ */
   const TG_URL = 'https://t.me/your_username';
 
   const isBot = /bot\/?$/i.test(TG_URL);
+  const tgLink = tag => isBot ? TG_URL.replace(/\/$/, '') + '?start=' + tag : TG_URL;
   document.querySelectorAll('[data-bot]').forEach(a => {
-    a.href = isBot ? TG_URL.replace(/\/$/, '') + '?start=' + a.dataset.bot : TG_URL;
+    a.href = tgLink(a.dataset.bot);
     a.target = '_blank';
     a.rel = 'noopener';
   });
@@ -483,15 +735,45 @@
   // фильтр преподавателей
   const chips = document.querySelectorAll('.chip');
   const cards = document.querySelectorAll('.team .card');
-  chips.forEach(chip => chip.addEventListener('click', () => {
-    chips.forEach(c => c.setAttribute('aria-pressed', c === chip));
-    const f = chip.dataset.filter;
+  const applyFilter = f => {
+    chips.forEach(c => c.setAttribute('aria-pressed', c.dataset.filter === f));
     cards.forEach(card => {
-      const show = f === 'all' || card.hasAttribute('data-always') || card.dataset.subjects.split(' ').includes(f);
+      const show = f === 'all' || card.dataset.subjects.split(' ').includes(f);
       card.hidden = !show;
       if (show) card.classList.add('in');
     });
-  }));
+  };
+  chips.forEach(chip => chip.addEventListener('click', () => applyFilter(chip.dataset.filter)));
+  // предметы на первом экране ведут к отфильтрованной команде
+  document.querySelectorAll('[data-goto]').forEach(a =>
+    a.addEventListener('click', () => applyFilter(a.dataset.goto)));
+
+  // карточка преподавателя
+  const modal = document.getElementById('tutorModal');
+  const openTutor = id => {
+    const card = document.querySelector(`.card[data-tutor="${id}"]`);
+    if (!card) return;
+    const img = card.querySelector('.ph img');
+    const mImg = document.getElementById('mImg');
+    mImg.src = img.src; mImg.alt = img.alt;
+    document.getElementById('mName').textContent = card.querySelector('h3').textContent;
+    document.getElementById('mTags').innerHTML = card.querySelector('.tags').innerHTML;
+    document.getElementById('mBio').innerHTML = card.querySelector('.bio').innerHTML;
+    document.getElementById('mCta').href = tgLink(id);
+    modal.querySelector('.modal-content').scrollTop = 0;
+    modal.querySelector('.modal-inner').scrollTop = 0;
+    if (typeof modal.showModal === 'function') modal.showModal(); else modal.setAttribute('open', '');
+    history.replaceState(null, '', '#' + id);
+  };
+  const closeTutor = () => { modal.close ? modal.close() : modal.removeAttribute('open'); };
+  document.querySelectorAll('[data-open]').forEach(b =>
+    b.addEventListener('click', () => openTutor(b.dataset.open)));
+  modal.querySelector('.modal-close').addEventListener('click', closeTutor);
+  modal.addEventListener('click', e => { if (e.target === modal) closeTutor(); });
+  modal.addEventListener('close', () => history.replaceState(null, '', location.pathname + location.search));
+  // прямая ссылка на преподавателя: сайт/#maria
+  const hashId = location.hash.slice(1);
+  if (hashId && document.querySelector(`.card[data-tutor="${hashId}"]`)) openTutor(hashId);
 
   // шапка и мобильная кнопка
   const header = document.querySelector('header');

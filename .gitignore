@@ -3,3 +3,5 @@ __pycache__/
 bot/.env
 bot/.venv/
 bot/data/
+~$*
+*.docx

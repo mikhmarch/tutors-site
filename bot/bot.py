@@ -2,7 +2,7 @@
 
 Что умеет:
   • открывается с сайта по ссылке ?start=<метка> и сразу показывает
-    нужного преподавателя (метки: alina, maria, arseniy, nikita, masha, help);
+    нужного преподавателя (метки: alina, maria, roman, arseniy, nina, masha, help);
   • листает карточки преподавателей с фото и фильтром по предмету;
   • собирает заявку: предмет → класс → цель → контакт → подтверждение;
   • отправляет заявку администратору (Алине) и сохраняет её в data/applications.csv;
@@ -148,10 +148,19 @@ def kb_carousel(flt: str, idx: int) -> InlineKeyboardMarkup:
             InlineKeyboardButton(text=f"{idx + 1} / {n}", callback_data="noop"),
             InlineKeyboardButton(text="▶️", callback_data=f"list:{flt}:{(idx + 1) % n}"),
         ])
+    if TUTORS[tid].get("bio"):
+        rows.append([InlineKeyboardButton(text="📖 Подробнее", callback_data=f"bio:{tid}")])
     rows.append([InlineKeyboardButton(
         text=f"📝 Записаться к {TUTORS[tid]['name_to']}", callback_data=f"book:{tid}")])
     rows.append([InlineKeyboardButton(text="⬅️ В меню", callback_data="menu_new")])
     return InlineKeyboardMarkup(inline_keyboard=rows)
+
+
+def kb_bio(tid: str) -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text=f"📝 Записаться к {TUTORS[tid]['name_to']}", callback_data=f"book:{tid}")],
+        [InlineKeyboardButton(text="⬅️ В меню", callback_data="menu")],
+    ])
 
 
 def kb_choices(prefix: str, options: list[tuple[str, str]]) -> InlineKeyboardMarkup:
@@ -282,6 +291,18 @@ async def cb_list(cb: CallbackQuery) -> None:
         await cb.message.delete()
     except TelegramBadRequest:
         pass
+
+
+@router.callback_query(F.data.startswith("bio:"))
+async def cb_bio(cb: CallbackQuery) -> None:
+    tid = cb.data.split(":", 1)[1]
+    if tid not in TUTORS:
+        await cb.answer()
+        return
+    await cb.answer()
+    t = TUTORS[tid]
+    text = f"<b>{e(t['name'])}</b> · {e(subjects_line(t))}\n\n{t['bio']}"  # bio уже в HTML
+    await cb.message.answer(text, reply_markup=kb_bio(tid))
 
 
 # ---------------------------------------------------------------- заявка
